@@ -28,7 +28,7 @@
         permanent: true 
         state: enabled
         immediate: true
-        ignore_errors: true
+      ignore_errors: true
     - name: Stop nginx service
       ansible.builtin.service:
         name: nginx
