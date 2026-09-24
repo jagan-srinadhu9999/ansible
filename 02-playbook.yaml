@@ -12,13 +12,23 @@
         name: nginx
         state: started
         enabled: true
+    - name: Install firewalld
+      ansible.builtin.package:
+        name: firewalld
+        state: present
 
+    -  name: Start firewalld
+       ansible.builtin.service:
+         name: firewalld
+         state: started
+         enabled: true
     - name: Allow HTTP traffic through firewalld (optional but recommended)
       ansible.posix.firewalld:
         service: http
         permanent: true 
         state: enabled
         immediate: true
+        ignore_errors: true
     - name: Stop nginx service
       ansible.builtin.service:
         name: nginx
