@@ -1,0 +1,19 @@
+- name: conect inventory host
+  hosts: web
+  become: true
+  tasks:
+    - name: Install Nginx package
+      ansible.builtin.dnf:
+        name: nginx
+        state: present  # "latest" can also be used if you always want the newest version
+
+    - name: Ensure Nginx service is started and enabled on boot
+      ansible.builtin.systemd:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Allow HTTP traffic through firewalld (optional but recommended)
+      ansible.posix.firewalld:
+        service: http
+        permanent: true 
