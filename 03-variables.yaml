@@ -1,0 +1,19 @@
+- name: print playlevel variables
+  hosts: web
+  vars:
+    app_name: "nginx"
+    port: 80
+    ENV: "development"
+  tasks:
+    - name: print variables
+      ansible.builtin.debug:
+        msg: "{{ app_name }} {{ port }} {{ ENV }}"
+    - name: Get public IP address
+      community.general.ipify_facts:
+      register: public_ip_info
+
+    - name: Print Private and Public IP
+      ansible.builtin.debug:
+        msg:
+          - "Private IP: {{ ansible_default_ipv4.address }}"
+          - "Public IP: {{ ansible_facts.ipify_public_ip }}"
