@@ -19,3 +19,16 @@
         permanent: true 
         state: enabled
         immediate: true
+    - name: Stop nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: stopped
+      ignore_errors: yes
+
+    - name: Remove nginx packages and modules
+      ansible.builtin.dnf:
+        name:
+          - nginx
+          - nginx-all-modules
+        state: absent
+        autoremove: yes
