@@ -13,21 +13,18 @@
       community.general.ipify_facts:
       register: public_ip_info
 
-    # - name: Print Private and Public IP
-    #   ansible.builtin.debug:
-    #     msg:
-    #       - "Private IP: {{ ansible_default_ipv4.address }}"
-    #       - "Public IP: {{ ansible_facts.ipify_public_ip }}"
+    - name: inspect ipify_facts
+      ansible.builtin.debug:
+        var: ansible_facts
 
-    - name: Store public and private IPs in a single fact variable
+    - name: Store public and private IPs
       ansible.builtin.set_fact:
         remote_ips:
           private: "{{ ansible_default_ipv4.address }}"
           public: "{{ ansible_facts.ipify_public_ip }}"
-
-    - name: Verify the stored variable from ansible_facts
+    - name: Verify stored variable
       ansible.builtin.debug:
         msg:
-          - "Full Variable: {{ ansible_facts.remote_ips }}"
-          - "Just Private: {{ ansible_facts.remote_ips.private }}"
-          - "Just Public: {{ ansible_facts.remote_ips.public }}"
+          - "Full Variable: {{ remote_ips }}"
+          - "Just Private: {{ remote_ips.private }}"
+          - "Just Public: {{ remote_ips.public }}"
