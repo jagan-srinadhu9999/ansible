@@ -1,0 +1,11 @@
+- name: first yaml to print variables
+  hosts: local
+  connection: local
+  vars:
+    var1: "Hello"
+    var2: "World"
+  tasks:
+    - name: print variables
+      ansible.builtin.debug:
+        msg: "{{ var1 }} {{ var2 }}"
+      
