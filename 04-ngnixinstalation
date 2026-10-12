@@ -25,6 +25,7 @@
       ansible.builtin.command: systemctl is-active nginx
       register: nginx_status
       changed_when: false
+      failed_when: false
       
 
     - name: print nginx status
@@ -36,4 +37,11 @@
       ansible.builtin.debug:
          msg: "Nginx is not running."
       when: nginx_status.stdout != "active"
+
+    - name: gather service information
+      ansible.builtin.service_facts:
+    
+    - name: Display Nginx service information
+        ansible.builtin.debug:
+            var: ansible_facts.services['nginx.service']
     
