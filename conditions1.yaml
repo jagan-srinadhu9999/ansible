@@ -38,4 +38,6 @@
         name: "{{item}}"
         state: absent
       loop: "{{packages}}"
-      when: "'curl' in packages and 'nginx' in packages"
+      when: 
+        - "'curl' in ansible_facts.packages"
+        - "'nginx' in ansible_facts.packages"
