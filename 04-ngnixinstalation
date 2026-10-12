@@ -30,3 +30,10 @@
     - name: print nginx status
       ansible.builtin.debug:
         msg: "Nginx status is {{ nginx_status.stdout }}"
+      when: nginx_status.stdout == "active"
+
+    - name: report failuer
+      ansible.builtin.debug:
+         msg: "Nginx is not running."
+      when: nginx_status.stdout != "active"
+    
