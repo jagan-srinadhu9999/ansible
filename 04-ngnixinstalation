@@ -44,4 +44,18 @@
     - name: Display Nginx service information
       ansible.builtin.debug:
         var: ansible_facts.services['nginx.service']
-    
+
+    - name: print nginx is running if state is running
+      ansible.builtin.debug:
+        msg: "nginx is running"
+      when: ansible_facts.services['nginx.service']['state'] == 'running'
+     
+    - name: print nginx is running if state is not running
+      ansible.builtin.debug:
+        msg: "nginx is not running"
+      when: ansible_facts.services['nginx.service']['state'] == 'not running'
+
+    - name: print nginx is running if state is enabled
+      ansible.builtin.debug:
+        msg: "nginx will start at boot"
+      when: ansible_facts.services['nginx.service']['state'] == 'enabled'
