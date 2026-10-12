@@ -1,6 +1,6 @@
 ---
 - name: use conditions and loop item keyword and when
-  hosts: webserver
+  hosts: web
   become: true
 
   vars:
