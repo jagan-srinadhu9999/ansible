@@ -1,0 +1,41 @@
+---
+- name: use conditions and loop item keyword and when
+  hosts: webserver
+  become: true
+
+  vars:
+    packages:
+      - curl
+      - nginx
+
+    services:
+      - nginx
+
+  tasks:
+    - name: Install packages
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ packages }}"
+
+    - name: start services
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop: "{{ services }}"
+      when: item == 'nginx'
+
+    - name: Verify curl installation
+      ansible.builtin.command: curl --version
+      register: curl_version
+      changed_when: false
+      failed_when: curl_version.rc != 0
+      when: "'curl' in packages"
+
+    - name: delete packages
+      ansible.builtin.package:
+        name: "{{item}}"
+        state: absent
+      loop: "{{packages}}"
+      when: "'curl' in packages and 'nginx' in packages"
