@@ -28,4 +28,4 @@
 
     - name: print ngnix status
       ansible.builtin.debug:
-        msg: "ngnix status is {{ngnix_status.stdout}}"
+        msg: 'ngnix status is "{{ngnix_status.stdout}}"'
