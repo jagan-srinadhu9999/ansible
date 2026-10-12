@@ -1,5 +1,5 @@
-name: install curl
-hosts: webserver
+name: install curl and ngnix and check status 
+hosts: web
 become: true
 tasks:
   - name: Install curl package
