@@ -1,31 +1,32 @@
 ---
-- name: install ngnix and nsure Nginx is running, and report its status without making
+- name: install nginx and nsure Nginx is running, and report its status without making
   hosts: web
   become: true
 
   vars:
     packages:
 
-      - ngnix
+      - nginx
       - unzip
 
   tasks:
-    - name: install ngnix and unzip
+    - name: install nginx and unzip
       ansible.builtin.package:
         name: "{{item}}"
         state: present
-      loop: "{{vars.packages}}
+      loop: "{{packages}}"
 
-    - name: start and enable ngnix
+    - name: start and enable nginx
       ansible.builtin.service:
-        name: ngnix
+        name: nginx
         state: started
-    - name: check ngnix is active or not
+        enabled: true
+    - name: check nginx is active or not
       ansible.builtin.command: systemctl is-active nginx
-      register: ngnix_status
+      register: nginx_status
       changed_when: false
       
 
-    - name: print ngnix status
+    - name: print nginx status
       ansible.builtin.debug:
-        msg: 'ngnix status is "{{ngnix_status.stdout}}"'
+        msg: "Nginx status is {{ nginx_status.stdout }}"
