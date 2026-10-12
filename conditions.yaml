@@ -1,6 +1,7 @@
   
   - name: install curl and ngnix and check status 
     hosts: web
+    gather_facts: false
     become: true
     tasks:
       - name: Install curl package
@@ -28,3 +29,14 @@
             name: nginx
             enabled: yes
             state: started
+
+     
+        
+      - name: Fetch public IP using ipify API
+        community.general.ipify_facts:
+            # This task runs directly on the remote node machine
+            register: ipify_result
+
+      - name: Output the Public IP
+        ansible.builtin.debug:
+           msg: "The public IP of this remote EC2 node is {{ ansible_facts.ipify_public_ip }}"
