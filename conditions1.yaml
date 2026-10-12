@@ -5,8 +5,9 @@
 
   vars:
     packages:
-      - curl
+      #- curl
       - nginx
+      - curl-minimal
 
     services:
       - nginx
