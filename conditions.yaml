@@ -1,0 +1,29 @@
+name: install curl
+hosts: webserver
+become: true
+tasks:
+  - name: Install curl package
+    ansible.builtin.package:
+      name: curl
+      state: present
+
+  - name: Verify curl installation
+    ansible.builtin.command: curl --version
+    register: curl_version
+    changed_when: false
+
+  - name: install ngnix
+    ansible.builtin.package:
+      name: nginx
+      state: present  
+
+  - name: start nginx service
+    ansible.builtin.service:
+      name: nginx
+      state: started
+      enabled: true
+  - name: ensure ngnix is running
+    ansible.builtin.systemd_service:
+        name: nginx
+        enabled: yes
+        state: started
