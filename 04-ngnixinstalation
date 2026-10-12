@@ -40,8 +40,7 @@
 
     - name: gather service information
       ansible.builtin.service_facts:
-    
-    - name: Display Nginx service information
-        ansible.builtin.debug:
-            var: ansible_facts.services['nginx.service']
+        - name: Display Nginx service information
+          ansible.builtin.debug:
+             var: ansible_facts.services['nginx.service']
     
